@@ -1,0 +1,49 @@
+#include "iostream"
+using namespace std;
+
+class BankAccountManagement {
+    private:
+    string accountHolderName;
+    long accountNumber;
+    float *balance;
+
+    public:
+    BankAccountManagement() {
+        accountHolderName = " ";
+        accountNumber = 0;
+        balance = new float;
+        *balance = 0.0;
+    }
+
+    BankAccountManagement(string accountHolderName, int accountNumber, float balance) {
+        this->accountHolderName = accountHolderName;
+        this->accountNumber = accountNumber;
+        this->balance = new float;
+        *this->balance = balance;
+    }
+
+    BankAccountManagement(BankAccountManagement &obj) {
+        accountHolderName = obj.accountHolderName;
+        accountNumber = obj.accountNumber;
+        balance = new float;
+        *balance = *obj.balance - 200;
+    }
+
+    void viewDetails() {
+        cout << "\nAccount Holder Name: " << accountHolderName << endl << "Account Number: " << accountNumber << endl << "Balance: $" << *balance << endl;
+    }
+    
+    ~BankAccountManagement() {
+    	delete balance;
+	}
+};
+
+int main() {
+    BankAccountManagement account1;
+    BankAccountManagement account2("Muhammad Abdullah", 2350320017905, 15000.0);
+    BankAccountManagement account3 = account2;
+
+    account1.viewDetails();
+    account2.viewDetails();
+    account3.viewDetails();
+}
