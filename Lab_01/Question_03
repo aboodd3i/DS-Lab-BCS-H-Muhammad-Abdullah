@@ -1,0 +1,55 @@
+#include "iostream"
+using namespace std;
+
+class Box {
+    private:
+    int *length, *width, *height;
+
+    public:
+    Box(int length = 0, int width = 0, int height = 0) {
+        this->length = new int;
+        *this->length = length;
+
+        this->height = new int;
+        *this->height = height;
+
+        this->width = new int;
+        *this->width = width;
+    }
+
+    Box(Box &obj) {
+        height = new int(*obj.height);
+        length = new int (*obj.length);
+        width = new int(*obj.width);
+    }
+
+    Box operator=(Box &obj) {
+        Box temp = obj;
+        return temp;
+    }
+
+    void modifyDetaiils(int length, int width, int height) {
+        *this->height = height;
+        *this->length = length;
+        *this->width = width;
+    }
+
+    void viewDetails() {
+        cout << "\nLength: " << *length << endl << "Width: " << *width << endl << "Height: " << *height << endl;
+    }
+
+    ~Box() {
+        delete height;
+        delete length;
+        delete width;
+    }
+};
+
+int main() {
+    Box first(5, 10, 15);
+    Box second = first;
+
+    first.viewDetails();
+    second.viewDetails();
+
+}
