@@ -1,0 +1,45 @@
+#include "iostream"
+using namespace std;
+
+class Exam {
+    private:
+    string studentName, *examDate;
+    int score;
+
+    public:
+
+    Exam(string studentName = " ", string examDate = " ", int score = 0) {
+        this->studentName = studentName;
+        this->score = score;
+        this->examDate = new string;
+        *this->examDate = examDate;
+    }
+
+    void setName(string studentName) {
+        this->studentName = studentName;
+    }
+
+    void setDate(string examDate) {
+        *this->examDate = examDate;
+    }
+
+    void setScore (int score) {
+        this->score = score;
+    }
+
+    void viewDetails() {
+        cout << "\nStudent Name: " << studentName << endl << "Exam Date: " << *examDate << endl << "Score: " << score << endl;
+    }
+};
+
+int main() {
+    Exam student1("Muhammad Abdullah", "15 November, 2025", 55);
+    Exam student2;
+
+    student2.setDate("12 August, 2024");
+    student2.setName("Saad SOhail");
+    student2.setScore(50);
+
+    student1.viewDetails();
+    student2.viewDetails();
+}
