@@ -1,0 +1,152 @@
+// class submission
+#include "iostream"
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+
+    Node(int d)
+    {
+        data = d;
+        next = nullptr;
+    }
+};
+
+class Singly
+{
+public:
+    Node *head;
+    Node *tail;
+
+    Singly()
+    {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void insertAtHead(int val)
+    {
+        Node *n = new Node(val);
+        if (head == nullptr)
+        {
+            head = tail = n;
+        }
+        else
+        {
+            n->next = head;
+            head = n;
+        }
+    }
+
+    void insertAtTail(int val)
+    {
+        Node *n = new Node(val);
+        if (head == nullptr)
+        {
+            insertAtHead(val);
+            return;
+        }
+        tail->next = n;
+        tail = n;
+    }
+
+    void print()
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->data << " --> ";
+            temp = temp->next;
+        }
+        cout << "nullptr\n";
+    }
+
+    Node *reverse(Node *someHead)
+    {
+        Node *prev = nullptr;
+        Node *curr = someHead;
+        Node *next = nullptr;
+        while (curr != nullptr)
+        {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    bool isPalindrome()
+    {
+        if (head == nullptr || head->next == nullptr)
+            return true;
+
+        Node *slow = head;
+        Node *fast = head;
+
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        Node *secondHalf = reverse(slow);
+        Node *firstHalf = head;
+
+        while (secondHalf != nullptr)
+        {
+            if (firstHalf->data != secondHalf->data)
+            {
+                return false;
+            }
+            firstHalf = firstHalf->next;
+            secondHalf = secondHalf->next;
+        }
+        return true;
+    }
+};
+
+int main()
+{
+    Singly s;
+
+    s.insertAtTail(1);
+    s.insertAtTail(2);
+    s.insertAtTail(3);
+    s.insertAtTail(2);
+    s.insertAtTail(1);
+
+    cout << "Linked List: ";
+    s.print();
+
+    if (s.isPalindrome())
+    {
+        cout << "The linked list is a palindrome.\n";
+    }
+    else
+    {
+        cout << "The linked list is NOT a palindrome.\n";
+    }
+
+    Singly s2;
+    s2.insertAtTail(10);
+    s2.insertAtTail(20);
+    s2.insertAtTail(30);
+
+    cout << "\nLinked List: ";
+    s2.print();
+
+    if (s2.isPalindrome())
+    {
+        cout << "The linked list is a palindrome.\n";
+    }
+    else
+    {
+        cout << "The linked list is NOT a palindrome.\n";
+    }
+
+    return 0;
+}
