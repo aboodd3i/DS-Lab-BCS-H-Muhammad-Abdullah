@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int d) {
+        data = d;
+        next = NULL;
+    }
+};
+
+int josephus(int n, int k) {
+    Node* head = new Node(1);
+    Node* prev = head;
+    for (int i = 2; i <= n; i++) {
+        prev->next = new Node(i);
+        prev = prev->next;
+    }
+    prev->next = head;
+
+    Node* ptr = head;
+    Node* before = prev;
+    while (ptr->next != ptr) {
+        for (int count = 1; count < k; count++) {
+            before = ptr;
+            ptr = ptr->next;
+        }
+        before->next = ptr->next;
+        Node* temp = ptr;
+        ptr = ptr->next;
+        delete temp;
+    }
+    int survivor = ptr->data;
+    delete ptr;
+    return survivor;
+}
+
+int main() {
+    int n = 7, k = 3;
+    cout << "Survivor: " << josephus(n, k) << endl;
+}
