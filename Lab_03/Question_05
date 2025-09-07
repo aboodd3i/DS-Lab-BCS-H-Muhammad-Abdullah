@@ -1,0 +1,82 @@
+#include <iostream>
+using namespace std;
+
+class SNode {
+public:
+    int data;
+    SNode* next;
+    SNode(int d) {
+        data = d;
+        next = NULL;
+    }
+};
+
+class DNode {
+public:
+    int data;
+    DNode* next;
+    DNode* prev;
+    DNode(int d) {
+        data = d;
+        next = NULL;
+        prev = NULL;
+    }
+};
+
+DNode* singlyToDoubly(SNode* head) {
+    if (!head) return NULL;
+    DNode* dhead = new DNode(head->data);
+    DNode* dcurr = dhead;
+    head = head->next;
+    while (head) {
+        DNode* newNode = new DNode(head->data);
+        dcurr->next = newNode;
+        newNode->prev = dcurr;
+        dcurr = newNode;
+        head = head->next;
+    }
+    return dhead;
+}
+
+SNode* singlyToCircular(SNode* head) {
+    if (!head) return NULL;
+    SNode* temp = head;
+    while (temp->next) temp = temp->next;
+    temp->next = head;
+    return head;
+}
+
+void printDoubly(DNode* head) {
+    DNode* temp = head;
+    while (temp) {
+        cout << temp->data;
+        if (temp->next) cout << " <-> ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+void printCircular(SNode* head, int n) {
+    SNode* temp = head;
+    for (int i = 0; i < n; i++) {
+        cout << temp->data;
+        if (i < n - 1) cout << " -> ";
+        temp = temp->next;
+    }
+    cout << " -> ..." << endl;
+}
+
+int main() {
+    SNode* sHead = new SNode(1);
+    sHead->next = new SNode(2);
+    sHead->next->next = new SNode(3);
+    sHead->next->next->next = new SNode(4);
+
+    DNode* dHead = singlyToDoubly(sHead);
+    cout << "Doubly Linked List: ";
+    printDoubly(dHead);
+
+    SNode* cHead = singlyToCircular(sHead);
+    cout << "Circular Linked List (showing 10 nodes to demonstrate loop): ";
+    printCircular(cHead, 10);
+}
