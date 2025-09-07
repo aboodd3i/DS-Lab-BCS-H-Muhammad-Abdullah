@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* next;
+    Node(int d) {
+        data = d;
+        next = NULL;
+    }
+};
+
+Node* mergeLists(Node* l1, Node* l2) {
+    Node dummy(0);
+    Node* tail = &dummy;
+    while (l1 && l2) {
+        if (l1->data < l2->data) {
+            tail->next = l1;
+            l1 = l1->next;
+        } else {
+            tail->next = l2;
+            l2 = l2->next;
+        }
+        tail = tail->next;
+    }
+    if (l1) tail->next = l1;
+    if (l2) tail->next = l2;
+    return dummy.next;
+}
+
+void printList(Node* head) {
+    while (head) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* a1 = new Node(1);
+    a1->next = new Node(3);
+    a1->next->next = new Node(5);
+
+    Node* a2 = new Node(2);
+    a2->next = new Node(4);
+    a2->next->next = new Node(6);
+
+    Node* merged = mergeLists(a1, a2);
+    printList(merged);
+}
