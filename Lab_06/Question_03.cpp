@@ -1,3 +1,5 @@
+// Muhammad Saad Sohail      24K-0549
+
 #include<iostream>
 using namespace std;
 
@@ -16,7 +18,7 @@ public:
     }
 
     bool isFull(){
-        return ((rear + 1) % size == front);
+        return rear == size - 1;
     }
 
     void enqueue(char c){
@@ -24,15 +26,9 @@ public:
             cout << "Queue Overflow" << endl;
             return;
         }
-        if(front == -1){
-            front = 0;
-            rear = 0;
-            arr[rear] = c;
-        }
-        else{
-            rear = (rear + 1) % size;
-            arr[rear] = c;
-        }
+        if(front == -1) front = 0;
+        rear++;
+        arr[rear] = c;
     }
 
     char dequeue(){
@@ -41,12 +37,8 @@ public:
             return '\0';
         }
         char removed = arr[front];
-        if(front == rear){
-            front = rear = -1;
-        }
-        else{
-            front = (front + 1) % size;
-        }
+        if(front == rear) front = rear = -1;
+        else front++;
         cout << "Dequeued: " << removed << endl;
         return removed;
     }
@@ -67,10 +59,9 @@ public:
             return;
         }
         int i = front;
-        while(true){
+        while(i <= rear){
             cout << arr[i] << endl;
-            if(i == rear) break;
-            i = (i + 1) % size;
+            i++;
         }
     }
 
@@ -85,18 +76,16 @@ int main(){
     q.enqueue('A');
     q.enqueue('B');
     q.enqueue('C');
+    q.display();
+
+    q.dequeue();
+    q.display();
+
     q.enqueue('D');
-    q.display();
-
-    q.dequeue();
-    q.dequeue();
-    q.display();
-
     q.enqueue('E');
     q.enqueue('F');
-    q.display();
 
-    q.enqueue('G');
+    q.display();
 
     return 0;
 }
