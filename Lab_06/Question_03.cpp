@@ -1,5 +1,3 @@
-// Muhammad Saad Sohail      24K-0549
-
 #include<iostream>
 using namespace std;
 
